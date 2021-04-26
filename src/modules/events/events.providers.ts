@@ -1,4 +1,4 @@
-import { Event } from './event.model';
+import { Event } from './events.model';
 import { EVENT_REPOSITORY } from '../../core/constants';
 
 export const eventsProviders = [{

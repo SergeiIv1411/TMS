@@ -30,6 +30,7 @@
     "@nestjs/swagger": "^4.8.0",
     "amqp-connection-manager": "^3.2.2",
     "amqplib": "^0.7.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",

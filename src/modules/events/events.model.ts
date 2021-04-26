@@ -15,7 +15,7 @@ export class Event extends Model<Event, EventCreationAttrs> {
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
     id: number;
 
-    @ApiProperty({example:'', description: 'Идентификатор события в базе ERP'})
+    @ApiProperty({example:'a5ec76b0-a08c-11eb-bb9c-0050569425be', description: 'Идентификатор события в базе ERP'})
     @Column({
         type: DataType.STRING,
         unique: true,

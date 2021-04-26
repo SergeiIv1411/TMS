@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 export class CreateEventDto {
     @ApiProperty({example: 'Въезд на территорию', description: 'Название события'})
     readonly name: string;
-    @ApiProperty({example: '', description: 'Идентификатор события в базе ERP'})
+    @ApiProperty({example: 'a5ec76b0-a08c-11eb-bb9c-0050569425be', description: 'Идентификатор события в базе ERP'})
     readonly guid: string;
     @ApiProperty({example: 'Въезд', description: 'Тип события'})
     readonly typeEvent: string;
