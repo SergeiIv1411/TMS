@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript';
+import { CarEvents } from '../events/car-events.model';
+import { Event } from '../events/events.model';
 
 interface CarCreationAttrs {
     docNumber: string;
@@ -12,7 +14,9 @@ interface CarCreationAttrs {
     driver: string;
     driverPhone: string;
     description: string;    
-    author: string;  
+    author: string;
+    eventId: string;
+    factDate: Date;
 }
 
 @Table({tableName: 'cars'})
@@ -88,4 +92,22 @@ export class Car extends Model<Car, CarCreationAttrs> {
         type: DataType.STRING,
     })
     author: string;
+
+    @BelongsToMany(() => Event, () => CarEvents)
+    events: Event[];
+
+    @ForeignKey(() => Event)
+    @ApiProperty({example: 'a5ec76b0-a08c-11eb-bb9c-0050569425be', description: 'Уникальный идентификатор события'})
+    @Column({type: DataType.STRING})
+    eventId: string;
+
+    @BelongsTo(() => Event, 'eventId')
+    event: Event;
+
+    @ApiProperty({example: new Date, description: 'Дата события'})
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    factDate: Date;
 }

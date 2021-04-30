@@ -36,8 +36,8 @@ export class EventsController {
         let eventModel = new CreateEventDto();
         
         eventModel = JSON.parse(data);
-        const guid = eventModel.guid;
-        const eventFromDB = await this.eventsService.getEventByGuid(guid);
+        const id = eventModel.id;
+        const eventFromDB = await this.eventsService.getEventById(id);
         if (eventFromDB) {
             await this.eventsService.update(eventFromDB.id, eventModel)
         } else {

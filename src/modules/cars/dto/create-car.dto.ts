@@ -25,6 +25,9 @@ export class CreateCarDto {
     readonly description: string;
     @ApiProperty({example: 'Крылова Н.', description: 'Автор заявки'})
     readonly author: string;
-
+    @ApiProperty({example: 'a5ec76b0-a08c-11eb-bb9c-0050569425be', description: 'Уникальный идентификатор события'})
+    readonly eventId: string;
+    @ApiProperty({example: new Date, description: 'Дата произошедшего события'})
+    readonly factDate: Date;
     
 }

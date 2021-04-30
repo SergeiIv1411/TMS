@@ -3,7 +3,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {cors: false});
+  const app = await NestFactory.create(AppModule);
+  app.enableCors();
   // global prefix
   app.setGlobalPrefix('api/v1');
   const config = new DocumentBuilder()

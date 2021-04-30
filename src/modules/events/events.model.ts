@@ -1,27 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany, BelongsToMany } from 'sequelize-typescript';
+import { Car } from '../cars/car.model';
+import { CarEvents } from './car-events.model';
 
 interface EventCreationAttrs {
     name: string;
-    guid: string;
     typeEvent: string;
     priority: number;
     active: boolean;
 }
 
-@Table({tableName: 'events'})
+@Table({tableName: 'events', createdAt: false, updatedAt: false})
 export class Event extends Model<Event, EventCreationAttrs> {
-    @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
-    @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
-    id: number;
-
-    @ApiProperty({example:'a5ec76b0-a08c-11eb-bb9c-0050569425be', description: 'Идентификатор события в базе ERP'})
-    @Column({
-        type: DataType.STRING,
-        unique: true,
-        allowNull: false,
-    })
-    guid: string;
+    @ApiProperty({example: 'a5ec76b0-a08c-11eb-bb9c-0050569425be', description: 'Уникальный идентификатор (идентификатор события в ERP)'})
+    @Column({type: DataType.STRING, unique: true, primaryKey: true})
+    id: string;
 
     @ApiProperty({example:'Въезд на территорию', description: 'Название события'})
     @Column({
@@ -49,4 +42,10 @@ export class Event extends Model<Event, EventCreationAttrs> {
         type: DataType.BOOLEAN,
     })
     active: boolean;
+
+    @HasMany(() => Car)
+    carsInEvent: Car[];
+
+    @BelongsToMany(() => Car, () => CarEvents)
+    cars: Car[];
 }

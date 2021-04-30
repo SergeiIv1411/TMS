@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Car } from 'src/modules/cars/car.model';
+import { CarEvents } from 'src/modules/events/car-events.model';
 import { Event } from 'src/modules/events/events.model';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
 import { databaseConfig } from './database.config';
@@ -22,7 +23,7 @@ export const databaseProviders = [{
            config = databaseConfig.development;
         }
         const sequelize = new Sequelize(config);
-        sequelize.addModels([Event, Car]);
+        sequelize.addModels([Event, Car, CarEvents]);
         await sequelize.sync();
         return sequelize;
     },

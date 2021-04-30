@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EVENT_REPOSITORY } from 'src/core/constants';
+import { Car } from '../cars/car.model';
 import {CreateEventDto} from "./dto/create-event.dto";
 
 import {Event} from "./events.model";
@@ -14,8 +15,15 @@ export class EventsService {
         return event;
     }
 
+    async getEventById(id: string) {
+        const event = await this.eventRepository.findByPk(id);
+        return event;
+    }
+
     async getAll() {
-        const events = await this.eventRepository.findAll({where: {active: true}});
+        // ,  attributes: ['field1']
+        const events = await this.eventRepository.findAll({where: {active: true}, include: {model: Car, as: 'carsInEvent'}, order: [
+            ['priority', 'ASC']]});
         return events;
     }
 
@@ -24,12 +32,7 @@ export class EventsService {
         return events;
     }
 
-    async getEventByGuid(guid: string) {
-        const event = await this.eventRepository.findOne({where: {guid}});
-        return event;
-    }
-
-    async update(id: number, eventModel: CreateEventDto) {
+    async update(id: string, eventModel: CreateEventDto) {
         const [updatedEvent] = await this.eventRepository.update({ ...eventModel, id }, { where: { id }, returning: true });
 
         return updatedEvent;
